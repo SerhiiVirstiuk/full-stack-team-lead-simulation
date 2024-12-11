@@ -1,0 +1,1 @@
+export const numberToPxString = (size: number) => size + "px";
