@@ -3,49 +3,61 @@ import { getSuggestionValue } from "../Autocomplete.utilities";
 import { DataSourceState, IObservableSuggestionsDataSource, SuggestionsDataSourceStateListener } from "./DataSource.types";
 
 class LocalDataSource<TSuggestion extends ISuggestion | string> implements IObservableSuggestionsDataSource<TSuggestion> {
-    totalSuggestionsNumber: number;
     private allPossibleSuggestions: TSuggestion[];
-    private valueToComplete: string = '';
+    private allSatisfyingSuggestions: TSuggestion[] = [];
+    private isInitialized: boolean = false;
+    private listeners: SuggestionsDataSourceStateListener<TSuggestion>[] = [];
 
     private dataSourceState: DataSourceState<TSuggestion> = {
         isLoading: false,
         error: null,
         suggestions: [],
+        suggestionsTotalNumber: 0,
+        valueToComplete: ''
     };
-
-    private listeners: SuggestionsDataSourceStateListener<TSuggestion>[] = [];
 
     constructor(suggestions: TSuggestion[]) {
         this.allPossibleSuggestions = suggestions;
-        this.totalSuggestionsNumber = suggestions.length;
     }
 
     suggestFor(valueToComplete: string, itemsNumber: number): Promise<TSuggestion[]> {
-        this.valueToComplete = valueToComplete;
+        this.allSatisfyingSuggestions = this.allPossibleSuggestions
+            .filter(s => getSuggestionValue(s).toUpperCase().startsWith(valueToComplete.toUpperCase()));
 
-        const allSatisfyingSuggestions = this.allPossibleSuggestions
-        .filter(s => getSuggestionValue(s).startsWith(valueToComplete));
+        this.dataSourceState = {
+            ...this.dataSourceState,
+            suggestionsTotalNumber: this.allSatisfyingSuggestions.length,
+            suggestions: this.allSatisfyingSuggestions.slice(0, itemsNumber),
+            valueToComplete
+        }
 
-        this.totalSuggestionsNumber = allSatisfyingSuggestions.length;
-        this.dataSourceState.suggestions = allSatisfyingSuggestions.slice(0, itemsNumber - 1);
-
+        this.isInitialized = true;
         this.notifyStateChanged();
         return Promise.resolve(this.dataSourceState.suggestions);
     }
 
     suggestMore(offset: number, itemsNumber: number): Promise<TSuggestion[]> {
-        const additionalSuggestions = this.allPossibleSuggestions
-            .filter(s => getSuggestionValue(s).startsWith(this.valueToComplete))
-            .slice(offset, offset + itemsNumber - 1);
+        let additionalSuggestions: TSuggestion[] = [];
 
-        this.dataSourceState.suggestions = [...this.dataSourceState.suggestions, ...additionalSuggestions];
+        if (this.isInitialized)
+        {
+            const additionalSuggestions = this.allSatisfyingSuggestions
+                .slice(offset, offset + itemsNumber);
 
-        this.notifyStateChanged();
+            for (const initialIndex in additionalSuggestions)
+            {
+                this.dataSourceState.suggestions[offset + parseInt(initialIndex)] = additionalSuggestions[initialIndex];
+            }
+            this.dataSourceState.suggestionsTotalNumber = this.allSatisfyingSuggestions.length;
+
+            this.notifyStateChanged();
+        }
+
         return Promise.resolve(additionalSuggestions);
     }
-
-    getProposedSuggestions(): TSuggestion[] {
-        return this.dataSourceState.suggestions ?? [];
+    
+    isValidValue(value: string): boolean {
+        return this.allPossibleSuggestions.some(s => getSuggestionValue(s) == value);
     }
 
     subscribe(listener: SuggestionsDataSourceStateListener<TSuggestion>): () => void {

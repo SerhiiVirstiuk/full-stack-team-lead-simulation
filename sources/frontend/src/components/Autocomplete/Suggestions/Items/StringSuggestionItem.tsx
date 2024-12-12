@@ -19,7 +19,7 @@ const StringSuggestionItemComponent = (props: StringSuggestionItemProps) => {
     return (
         <div className={className} style={styles}>
             <Highlighter>{highlightPart}</Highlighter>
-            {remainingPart}
+            <span style={{whiteSpace: "pre-wrap"}}>{remainingPart}</span>
         </div>
     );
 }

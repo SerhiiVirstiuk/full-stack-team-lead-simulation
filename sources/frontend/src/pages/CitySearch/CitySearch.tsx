@@ -1,6 +1,9 @@
+import { useMemo, useState } from 'react';
 import AutocompleteInput from '../../components/Autocomplete/Autocomplete';
 import './CitySearch.scss';
-import citiesJson from './cities_short.json';
+//import citiesJson from './DataSource/cities_short.json';
+import { ICity } from './DataSource/CitiesApiSuggestionsDataSource.types';
+import CitiesApiSuggestionsDataSource from './DataSource/CitiesApiSuggestionsDataSource';
 
 export type City = {
     name: string,
@@ -12,18 +15,38 @@ export type City = {
 }
 
 const CitySearchPage = () => {
-    const cities = citiesJson.map(c => c as City);
+    //const cities = (citiesJson as object[]).map(c => c as City);
+    const [strictMode, setStrictMode] = useState(false);
+    const [loadWhenLessThan3, setLoadWhenEmptyMode] = useState(true);
+    const [autocompleteValue, setAutocomplateValue] = useState('');
+    const [chosenCityName, setChosenCityName] = useState<string | null>('');
 
-    return <div className="name-search-container">
+    const citiesDataSource = useMemo(() => new CitiesApiSuggestionsDataSource(), []);
+
+    return <div className="city-search-container">
         <h2>Let's choose next city for a trip :)</h2>
-        <div className="configuration">
-            
+        <div className="city-search-configuration">
+            <label>
+                <input type="checkbox" checked={strictMode} onChange={() => setStrictMode(!strictMode)} />
+                Strict mode
+            </label>
+            <label>
+                <input type="checkbox" checked={loadWhenLessThan3} onChange={() => setLoadWhenEmptyMode(!loadWhenLessThan3)} />
+                Load when less than 3 symbols
+            </label>
         </div>
-        <div className="name-search-form">
-            <form>
-                <AutocompleteInput suggestionsSource={cities.map(c => c.name)} />
-                <input type="submit" value="Save for a trip!" />
-            </form>
+        <div className="city-search-search-form">
+            <AutocompleteInput<ICity>
+                placeholder="Start typing city name here"
+                initialValue={autocompleteValue}
+                suggestionsSource={citiesDataSource}
+                loadSuggestionsAfterLength={!loadWhenLessThan3 ? 3 : 0}
+                isStrictMode={strictMode} 
+                onValueChanged={(value) => setAutocomplateValue(value)} />
+            <input type="submit" value="Choose" onClick={() => setChosenCityName(autocompleteValue)} />
+        </div>
+        <div className="city-search-result">
+            <h1>{chosenCityName ? `🏙️ ${chosenCityName}` : "No city chosen 😢"}</h1>
         </div>
     </div>;
 }

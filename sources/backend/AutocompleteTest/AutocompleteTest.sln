@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35431.28
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutocompleteTest.API", "AutocompleteTest.API\AutocompleteTest.API.csproj", "{8225F2B1-E055-4246-83D0-DD94FD8FD63F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutocompleteTest.Core", "AutocompleteTest.Core\AutocompleteTest.Core.csproj", "{6516BC4A-92AC-47DF-9E14-0053B6BEEC3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutocompleteTest.Data", "AutocompleteTest.Data\AutocompleteTest.Data.csproj", "{A56F1003-F16F-4133-AA9D-C3FD71D0C3DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8225F2B1-E055-4246-83D0-DD94FD8FD63F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8225F2B1-E055-4246-83D0-DD94FD8FD63F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8225F2B1-E055-4246-83D0-DD94FD8FD63F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8225F2B1-E055-4246-83D0-DD94FD8FD63F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6516BC4A-92AC-47DF-9E14-0053B6BEEC3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6516BC4A-92AC-47DF-9E14-0053B6BEEC3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6516BC4A-92AC-47DF-9E14-0053B6BEEC3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6516BC4A-92AC-47DF-9E14-0053B6BEEC3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A56F1003-F16F-4133-AA9D-C3FD71D0C3DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A56F1003-F16F-4133-AA9D-C3FD71D0C3DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A56F1003-F16F-4133-AA9D-C3FD71D0C3DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A56F1003-F16F-4133-AA9D-C3FD71D0C3DE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {64D03567-D7E3-423A-9947-42C397E816AF}
+	EndGlobalSection
+EndGlobal

@@ -60,7 +60,16 @@ const StickyDropdownComponent = (props: StickyDropdownProps) =>
     }, []);
 
     const handleFocus = (event: React.FocusEvent<HTMLElement>) => setVisibility(hasFocus(containerRef, event.target) ?? false);
-    const handleBlur = (event: React.FocusEvent<HTMLElement>) => setVisibility(hasFocus(containerRef, event.relatedTarget) ?? false);
+    const handleBlur = (event: React.FocusEvent<HTMLElement>) => {
+        const visibility = hasFocus(containerRef, event.relatedTarget) ?? false;
+
+        setVisibility(visibility);
+
+        if (!visibility && props.onBlur)
+        {
+            props.onBlur();
+        }
+    };
 
     return (
         <div 

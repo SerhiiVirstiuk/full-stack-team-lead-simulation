@@ -8,7 +8,7 @@ export function resolveSuggestionItemTemplate<TSuggestion extends ISuggestion | 
     : (suggestionItemProps : SugggestionItemProps<TSuggestion>) => JSX.Element
 {
     const defaultSuggestionItemTemplate = (suggestionItemProps : SugggestionItemProps<TSuggestion>) => 
-        <StringSuggestionItemComponent {...convertToStringItemProps(suggestionItemProps)} />
+        <StringSuggestionItemComponent {...convertToStringItemProps(suggestionItemProps)} />;
 
     return suggestionItemTemplate 
         ?? defaultSuggestionItemTemplate;

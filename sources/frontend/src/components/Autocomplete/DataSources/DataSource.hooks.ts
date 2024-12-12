@@ -7,10 +7,14 @@ export function useSuggestionsDataSource<TSuggestion = ISuggestion | string>(dat
         isLoading: false,
         error: null,
         suggestions: [],
+        suggestionsTotalNumber: 0,
+        valueToComplete: ''
     });
   
     useEffect(() => {
-      const unsubscribe = dataSource.subscribe((newState) => setState(newState));
+      const unsubscribe = dataSource.subscribe((newState) => {
+          setState(newState);
+      });
       return () => unsubscribe();
     }, [dataSource]);
   

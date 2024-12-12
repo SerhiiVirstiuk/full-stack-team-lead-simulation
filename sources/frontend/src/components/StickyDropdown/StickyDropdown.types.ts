@@ -8,5 +8,6 @@ export interface StickyDropdownProps {
     width?: number;
     minHeight?: number;
     maxHeight?: number;
+    onBlur?: () => void;
     children: [ReactElement<typeof TargetSubComponent>, ReactElement<typeof ContentSubComponent>];
 }

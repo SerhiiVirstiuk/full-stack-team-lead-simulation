@@ -1,7 +1,28 @@
 @import '../../styles/variables.scss';
 
+@-webkit-keyframes LoadingAnimation {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes LoadingAnimation {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
+@keyframes LoadingAnimation {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
+
 .autocomplete {
     width: 100%;
+
+    .rotating-spinner {
+        margin-left: -50px;
+        margin-top: 5px;
+    }
 
     .dropdown-container {
         input[type=text] {
@@ -26,12 +47,49 @@
                 li {
                     display: block;
                     width: 100%;
+
+                    .item-loading {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        padding: 0 15px;
+                        cursor: pointer;
+                        width: 100%;
+                        
+                        span {
+                            width: 80%;
+                            display: block;
+                            font-size: 20px;
+                            
+                            background: linear-gradient(90deg, $border-color-active, $border-color);
+                            background-size: 400% 400%;
+                        
+                            -webkit-animation: LoadingAnimation 6s ease infinite;
+                            -moz-animation: LoadingAnimation 6s ease infinite;
+                            animation: LoadingAnimation 6s ease infinite;
+                        }
+                    }
                 }
             }
 
             .scrollable {
                 scrollbar-color: $border-color transparent;
                 scrollbar-width: thin;
+            }
+
+            .suggestions-number {
+                position: absolute;
+                color: #fff;
+                padding: 5px 10px;
+                margin: 0 0 0 100%;
+                border-radius: 0 10px 10px 10px;
+                background-color: $border-color-active;
+            }
+
+            .error-fallback, .info-fallback {
+                padding: 15px;
+                font-size: 20px;
+                text-align: center;
             }
         }
     }
