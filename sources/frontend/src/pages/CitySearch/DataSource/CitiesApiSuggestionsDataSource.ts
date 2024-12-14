@@ -69,7 +69,7 @@ class CitiesApiSuggestionsDataSource implements IObservableSuggestionsDataSource
     async suggestMore(offset: number, itemsNumber: number): Promise<ICity[]> {
         if (this.isInitialized)
         {
-            const citiesResponsePromise = this.requestCities(this.dataSourceState.valueToComplete, 0, itemsNumber);
+            const citiesResponsePromise = this.requestCities(this.dataSourceState.valueToComplete, offset, itemsNumber);
             this.incrementRequestsCount();
             this.notifyStateChanged();
 
