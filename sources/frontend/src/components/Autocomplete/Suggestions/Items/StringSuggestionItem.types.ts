@@ -1,10 +1,10 @@
 import { ISuggestion } from "../../Autocomplete.types";
-import { SugggestionItemProps } from "./SuggestionItem.types";
+import { SuggestionItemProps } from "./SuggestionItem.types";
 
-export interface StringSuggestionItemProps extends SugggestionItemProps<string> {
+export interface StringSuggestionItemProps extends SuggestionItemProps<string> {
 }
 
-export function convertToStringItemProps<TSuggestion>(props: SugggestionItemProps<TSuggestion>) 
+export function convertToStringItemProps<TSuggestion>(props: SuggestionItemProps<TSuggestion>) 
 {
     return ({
         ...props,

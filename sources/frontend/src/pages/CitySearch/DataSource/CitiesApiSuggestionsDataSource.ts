@@ -1,7 +1,6 @@
 import { DataSourceState, IObservableSuggestionsDataSource, SuggestionsDataSourceStateListener } from "../../../components/Autocomplete/DataSources/DataSource.types";
 import { ICity } from "./CitiesApiSuggestionsDataSource.types";
 import { CancelablePromise, CitiesService, CityModel, GetCitiesResponse } from "../../../integrations/CitiesApi";
-import { Value } from "sass";
 
 const DEFAULT_STATE: DataSourceState<ICity> = {
     isLoading: false,
@@ -111,7 +110,7 @@ class CitiesApiSuggestionsDataSource implements IObservableSuggestionsDataSource
     }
 
     isValidValue(value: string): boolean {
-        return this.dataSourceState.suggestions.some(s => s.value == value);
+        return this.dataSourceState.suggestions.some(s => s.value === value);
     }
 
     subscribe(listener: SuggestionsDataSourceStateListener<ICity>): () => void {

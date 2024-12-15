@@ -4,9 +4,9 @@ import { StringSuggestionItemProps } from "./StringSuggestionItem.types";
 
 const StringSuggestionItemComponent = (props: StringSuggestionItemProps) => {
     const { value, searchValue } = props;
-    const className = "string-suggestion";
+    const className = props.className ?? "string-suggestion";
     const styles = {
-        height: props.itemHeight
+        height: props.itemHeight ?? 'auto'
     };
 
     if (!searchValue || !value.toLowerCase().startsWith(searchValue.toLowerCase())) {

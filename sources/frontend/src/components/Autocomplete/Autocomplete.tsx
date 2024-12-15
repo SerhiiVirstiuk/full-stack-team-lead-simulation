@@ -5,7 +5,7 @@ import Target from "../StickyDropdown/Target/Target";
 import { useEffect, useState } from 'react';
 import { AutocompleteProps, ISuggestion } from './Autocomplete.types';
 import SuggestionsListComponent from './Suggestions/List/SuggestionsList';
-import { getSuggestionValue } from './Autocomplete.utilities';
+import { getSuggestionValue, isLoadedSuggestion } from './Autocomplete.utilities';
 import { useSuggestionsDataSource } from './DataSources/DataSource.hooks';
 import { resolveSuggestionsSource } from './DataSources/DataSource.utilities';
 import { resolveSuggestionItemTemplate } from './Suggestions/Suggestion.utilities';
@@ -39,7 +39,10 @@ function AutocompleteInputComponent<TSuggestion extends ISuggestion | string = s
 
     // Suggestion click handler
     const chooseSuggestion = (suggestion: TSuggestion) => {
-        setValueToComplete(getSuggestionValue<TSuggestion>(suggestion));
+        if (isLoadedSuggestion(suggestion))
+        {
+            setValueToComplete(getSuggestionValue<TSuggestion>(suggestion));
+        }
     };
 
     // Strict Mode denies values out of the suggestion list
@@ -49,16 +52,23 @@ function AutocompleteInputComponent<TSuggestion extends ISuggestion | string = s
             setValueToComplete('');
         }
     }
+
+    useEffect(() => {
+        if (!isValidValue(debouncedValueToComplete))
+        {
+            setValueToComplete('');
+        }
+    }, [props.isStrictMode]);
     
     useEffect(() => {
+        // Notify client component  that value has changed
+        props.onValueChanged?.(isValidValue(debouncedValueToComplete) ? debouncedValueToComplete : '');
+
         // Suggestions list initial loading
         if (isLongEnoughValue(debouncedValueToComplete))
         {
             suggestionsSource.suggestFor(debouncedValueToComplete, suggestionsBatchSize);
         }
-
-        // Notify client component  that value has changed
-        props.onValueChanged?.(isValidValue(debouncedValueToComplete) ? debouncedValueToComplete : '');
     }, [debouncedValueToComplete, props.loadSuggestionsAfterLength]);
 
     // Callback for loading next batches

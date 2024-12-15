@@ -1,8 +1,21 @@
+@import './mixins/screen-size-mixins.scss';
+
 .main-container {
     display: flex;
     flex-direction: column;
-    width: 667px;
     margin: 0 auto;
+
+    @include for-phone-only {
+        width: 90%;
+    }
+
+    @include for-tablet-portrait-up {
+        width: 90%;
+    }
+
+    @include for-tablet-landscape-up {
+        width: 667px;
+    }
 
     .header {
         display: flex;
@@ -12,6 +25,10 @@
         align-items: center;
         width: 100%;
         height: 150px;
+
+        h1 {
+            text-align: center;
+        }
     }
 
     .content {

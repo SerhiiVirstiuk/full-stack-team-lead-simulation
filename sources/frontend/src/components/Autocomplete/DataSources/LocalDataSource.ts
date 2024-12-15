@@ -57,7 +57,7 @@ class LocalDataSource<TSuggestion extends ISuggestion | string> implements IObse
     }
     
     isValidValue(value: string): boolean {
-        return this.allPossibleSuggestions.some(s => getSuggestionValue(s) == value);
+        return this.allPossibleSuggestions.some(s => getSuggestionValue(s) === value);
     }
 
     subscribe(listener: SuggestionsDataSourceStateListener<TSuggestion>): () => void {
